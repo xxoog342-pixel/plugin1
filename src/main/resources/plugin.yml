@@ -1,0 +1,61 @@
+name: Onyx
+version: '${project.version}'
+main: com.onux.onyx.Onyx
+api-version: '1.21'
+author: Onux
+description: ONUX legendary weapon arsenal - Warden Crossbow, Frost Blade, Leviathan's Fang, Void Blade, The Eyes.
+
+commands:
+  ability:
+    description: Trigger a Warden Crossbow ability by number (1 or 2)
+    usage: /ability <1|2>
+  waterability:
+    description: Trigger a Leviathan's Fang ability by number (1 or 2)
+    usage: /waterability <1|2>
+  frostability:
+    description: Trigger a Frost Blade ability by number (1 or 2)
+    usage: /frostability <1|2>
+  voidability:
+    description: Trigger a Void Blade ability by number (1 or 2)
+    usage: /voidability <1|2>
+  eyesability:
+    description: Trigger an Eyes ability by number (1 or 2)
+    usage: /eyesability <1|2>
+  voidreaver:
+    description: Receive the Void Blade
+    usage: /voidreaver
+    aliases: [voidblade]
+  onuxmenu:
+    description: Open the ONUX weapon arsenal menu
+    usage: /Onuxmenu
+    aliases: [Onuxmenu, onyxmenu]
+  frostgui:
+    description: Receive the Warden Crossbow
+    usage: /frostgui
+  frostblade:
+    description: Receive the Frost Blade
+    usage: /frostblade
+  leviathan:
+    description: Receive the Leviathan's Fang
+    usage: /leviathan
+    aliases: [levifang]
+  eyes:
+    description: Receive The Eyes
+    usage: /eyes
+  trust:
+    description: Manage Warden Crossbow / Void Blade trust list
+    usage: /trust <add|remove|list> [player]
+  cooldown:
+    description: Reset your weapon cooldowns
+    usage: /cooldown
+  warden:
+    description: Warden Crossbow admin utility
+    usage: /warden [text]
+
+permissions:
+  warden.use:
+    description: Allows using the Warden Crossbow's abilities.
+    default: true
+  onyx.admin:
+    description: Access to admin commands (give weapons, reset cooldowns for others).
+    default: op

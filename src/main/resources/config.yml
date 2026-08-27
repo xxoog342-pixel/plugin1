@@ -1,0 +1,145 @@
+# =====================================================================
+#  Onyx - Configuration
+#
+#  Values marked EXPLICIT were given directly in your ability spec
+#  (exact numbers you wrote). Values marked ESTIMATE were not specified
+#  by you and were picked to feel balanced against everything else -
+#  every one of them is safe to retune here without touching code.
+# =====================================================================
+
+boss-bar:
+  enabled: true
+  # Each player sees one boss bar per ability while it's on cooldown,
+  # counting down and disappearing at 0 - stacked if more than one
+  # ability is cooling down at once.
+  colors:
+    warden_beam: BLUE
+    sculk_meteor: BLUE
+    frozen_barrage: WHITE
+    ice_armor: WHITE
+    leviathan_tsunami: BLUE
+    tidal_dash: GREEN
+    void_slam: PURPLE
+    black_rift: PURPLE
+    hollow_purple: PINK
+    red_beam: RED
+  style: SOLID   # SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20
+
+abilities:
+
+  # -------------------------------------------------------------------
+  # WARDEN CROSSBOW
+  # -------------------------------------------------------------------
+  warden_beam:                     # Ability 1 - hold shift + right-click to charge, release to fire
+    cooldown-seconds: 60            # EXPLICIT
+    damage: 6.0                     # EXPLICIT (3 hearts)
+    charge-time-ticks: 30           # ESTIMATE - 1.5s full charge
+    min-charge-ticks: 6             # ESTIMATE - releasing too early fizzles instead of firing
+    range: 25                       # ESTIMATE
+    knockback: 1.6                  # ESTIMATE - "strongly pushed backward"
+
+  sculk_meteor:                     # Ability 2 - look at a player, activate
+    cooldown-seconds: 45            # ESTIMATE - not specified; shorter than the old storm since it's single-target now
+    damage: 8.0                     # EXPLICIT (4 hearts)
+    fall-time-ticks: 55             # ESTIMATE - ~2.75s fall, slow but clearly incoming
+    fall-start-height: 18           # ESTIMATE
+    impact-radius: 3.0              # ESTIMATE - splash radius around the direct target
+    ring-radius: 3.5                # ESTIMATE
+
+  wardens_gaze:                     # Passive - normal (non-ability) crossbow shots
+    chance-percent: 20              # EXPLICIT
+    blindness-duration-seconds: 2   # EXPLICIT
+
+  # -------------------------------------------------------------------
+  # FROST BLADE
+  # -------------------------------------------------------------------
+  frozen_barrage:                   # Ability 1
+    cooldown-seconds: 70            # EXPLICIT
+    charge-time-ticks: 20           # ESTIMATE - 1s charge-up
+    projectile-count: 4             # EXPLICIT
+    projectile-damage: 4.0          # EXPLICIT (2 hearts each)
+    projectile-speed: 1.6           # ESTIMATE
+    target-search-radius: 15        # ESTIMATE - how far it looks for nearby players to target
+
+  ice_armor:                        # Ability 2
+    cooldown-seconds: 45            # ESTIMATE - not specified; 4s of full invincibility warrants a real cooldown
+    duration-seconds: 4             # EXPLICIT
+
+  # -------------------------------------------------------------------
+  # LEVIATHAN'S FANG
+  # -------------------------------------------------------------------
+  leviathan_tsunami:                 # Ability 1
+    cooldown-seconds: 40             # ESTIMATE
+    damage-per-hit: 1.0              # EXPLICIT (0.5 hearts)
+    hit-interval-ticks: 5            # ESTIMATE - how often a player still inside can be re-hit
+    wave-length: 12                  # ESTIMATE
+    wave-speed-blocks-per-tick: 1.0  # ESTIMATE
+    wave-width: 5                    # ESTIMATE
+    knockback: 1.1                   # ESTIMATE
+    use-real-water-blocks: true      # EXPLICIT - you asked for real water this time, auto-reverted after use
+
+  tidal_dash:                        # Ability 2
+    cooldown-seconds: 20             # ESTIMATE
+    duration-ticks: 12               # ESTIMATE - ~0.6s of forced forward motion
+    speed: 1.9                       # ESTIMATE
+
+  # -------------------------------------------------------------------
+  # VOID BLADE
+  # -------------------------------------------------------------------
+  void_slam:                         # Ability 1 - press to rise, press again to slam
+    cooldown-seconds: 70             # ESTIMATE - carried over from the previous Void Ascension cooldown
+    rise-height: 9                   # ESTIMATE
+    rise-time-ticks: 40              # ESTIMATE
+    airborne-timeout-seconds: 8      # ESTIMATE - auto-cancels the rise if you never trigger the slam
+    slam-damage: 8.0                 # EXPLICIT (4 hearts)
+    destruction-radius: 3            # ESTIMATE
+    knockback: 1.4                   # ESTIMATE
+    target-range: 20                 # ESTIMATE
+
+  black_rift:                        # Ability 2 - target lock, rapid slashes, then a finisher
+    cooldown-seconds: 60             # ESTIMATE
+    target-range: 20                 # ESTIMATE
+    slash-count: 7                   # ESTIMATE
+    slash-damage: 1.0                # ESTIMATE (0.5 heart per slash)
+    slash-interval-ticks: 3          # ESTIMATE
+    final-strike-damage: 8.0         # ESTIMATE - "significantly stronger" than a single slash
+    final-strike-delay-ticks: 12     # ESTIMATE - the "brief pause" before the finisher
+
+  # -------------------------------------------------------------------
+  # THE EYES
+  # -------------------------------------------------------------------
+  hollow_purple:                     # Ability 1
+    cooldown-seconds: 90             # ESTIMATE - this is the weapon's ultimate
+    rise-height: 7                   # EXPLICIT
+    charge-time-ticks: 60            # ESTIMATE - ~3s to form and merge the spheres
+    damage: 10.0                     # ESTIMATE (5 hearts) - biggest single hit in the kit
+    explosion-radius: 3.5            # ESTIMATE
+    projectile-speed: 2.2            # ESTIMATE
+    range: 40                        # ESTIMATE
+
+  red_beam:                          # Ability 2
+    cooldown-seconds: 40             # ESTIMATE
+    range: 20                        # EXPLICIT
+    damage: 8.0                      # EXPLICIT (4 hearts)
+    block-break-radius: 1            # ESTIMATE - beam thickness for block destruction
+
+# =====================================================================
+# World safety - shared by every ability that changes or breaks blocks
+# =====================================================================
+world-safety:
+  protected-blocks:
+    - BEDROCK
+    - OBSIDIAN
+    - CRYING_OBSIDIAN
+    - END_PORTAL_FRAME
+    - CHEST
+    - TRAPPED_CHEST
+    - BARREL
+    - SHULKER_BOX
+    - SPAWNER
+    - COMMAND_BLOCK
+    - CHAIN_COMMAND_BLOCK
+    - REPEATING_COMMAND_BLOCK
+  # Sculk Meteor's crater and Void Slam's destruction both revert after this
+  # many seconds so an SMP doesn't get permanently craterred. 0 = permanent.
+  revert-terrain-after-seconds: 25
